@@ -1,8 +1,7 @@
 //authentification for db
 let mysql = require('./db_auth.js');
 
-
-//function to create row in DB
+//function to entry in DB
 function createEntry(inputArr, res){
     //insert new row into DB
     mysql.pool.query("INSERT INTO journal_entries (`username`, `entry`, `date`) " + 
@@ -13,17 +12,35 @@ function createEntry(inputArr, res){
 			return;
 		}
 		else{
-			console.log("new entry created")
+			console.log("new journal entry created")
+		}
+	});	
+}
+
+//function to create row in DB
+function createUser(inputArr, res){
+	//insert new row into DB
+    mysql.pool.query("INSERT INTO users (`username`, `password`) " + 
+	"VALUES (?, ?)", inputArr, function(err, result){
+		if(err){
+			//if error, log to console
+			console.log(err);
+			return;
+		}
+		else{
+			console.log("new user created")
 		}
 	});	
 }
 
 //function to read data from DB
-function read(res, tableName){
+function read(res, username, tableName){
+	inputArr = [username];
+
 	let context = {};
     //query DB
 	mysql.pool.query('SELECT *, DATE_FORMAT(date, "%m-%d-%Y") AS date FROM ' + tableName + 
-	" ORDER BY date(date) DESC, time(date) DESC;", function(err, rows, fields){	
+	" WHERE username=? ORDER BY date(date) DESC, time(date) DESC", [inputArr], function(err, rows, fields){	
 		if(err){
 			console.log(err);
 			return;
@@ -37,6 +54,44 @@ function read(res, tableName){
 		}
 	});
 }
+
+//get password hash from username
+function getPassHashFromUsername(username, callback) {
+	inputArr = [username];
+
+	//select row by username
+	mysql.pool.query("SELECT * FROM users WHERE username=?", [inputArr], function (error, result, fields){
+		if(error) { 
+			console.log(err); 
+			callback(true); 
+			return; 
+		}
+		callback(false, result[0].password);
+	});
+}
+
+//get password hash from username
+function doesUsernameExist(username, callback) {
+	inputArr = [username];
+	//select row by username
+	mysql.pool.query("SELECT * FROM users WHERE username=?", [inputArr], function (error, result, fields){
+		if(error) { 
+			console.log(err); 
+			callback(true); 
+			return; 
+		}
+		if(result.length == 0){
+			console.log('there is no user named ' + username);
+			callback(false, false);
+
+		}
+		else{
+			console.log('username ' + username + ' exists');
+			callback(false, true);
+		}
+	});
+}
+
 
 
 //function to update row
@@ -75,8 +130,10 @@ function deleteRow(id, tableName){
 		}
 	});	
 }
-
+module.exports.doesUsernameExist = doesUsernameExist;
+module.exports.getPassHashFromUsername = getPassHashFromUsername;
 module.exports.createEntry = createEntry;
+module.exports.createUser = createUser;
 module.exports.read = read;
 module.exports.updateRow = updateRow;
 module.exports.deleteRow = deleteRow;
