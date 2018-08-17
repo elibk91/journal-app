@@ -33,6 +33,7 @@ function generateRow(results, allEntries){
 	
 	//create entry date p
 	let dateP = document.createElement("p");
+	dateP.setAttribute("class", "entryDate");
 	let textnode = document.createTextNode(results.date);
 	dateP.appendChild(textnode);
 	entryDiv.appendChild(dateP);
@@ -43,6 +44,7 @@ function generateRow(results, allEntries){
 	entryTextP.appendChild(textnode);
 	entryTextP.setAttribute("id", "entryRowText" + 
 	+ results.id);
+	entryTextP.setAttribute("class", "entryBody")
 	entryDiv.appendChild(entryTextP);
 
 	//create buttons p
@@ -54,6 +56,7 @@ function generateRow(results, allEntries){
 	updateButton.appendChild(textnode);   
 	updateButton.setAttribute("onClick", "updateRow(" 
 	+ results.id + ")");
+	updateButton.setAttribute("class", "btn btn-primary");
 
 	//create delete button
 	let deleteButton = document.createElement("BUTTON");
@@ -61,6 +64,8 @@ function generateRow(results, allEntries){
 	deleteButton.appendChild(textnode);
 	deleteButton.setAttribute("onClick", "deleteRow(" 
 	+ results.id + ")");
+	deleteButton.setAttribute("class", "btn btn-primary");
+
 
 	buttons.appendChild(updateButton);
 	buttons.appendChild(deleteButton);
@@ -99,6 +104,7 @@ function generateRow(results, allEntries){
 	saveChangesButton.appendChild(textnode);   
 	saveChangesButton.setAttribute("onClick", "saveChanges(" 
 	+ results.id + ")");
+	saveChangesButton.setAttribute("class", "btn btn-primary");
 	updateDiv.appendChild(saveChangesButton);
 
 	entryDiv.appendChild(updateDiv);

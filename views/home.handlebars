@@ -1,16 +1,19 @@
-<h1>New Journal Entry:</h1>
 
+<ol class="breadcrumb">
+	<li class="breadcrumb-item active" aria-current="page">Hello, {{username}}</li>
+	<li class="breadcrumb-item"><a href="/logout">Logout</a></li>
+</ol>
 
 <form action="/" method="post">
+<h3>create a new journal entry</h3>
+
 	<textarea rows="4" cols="50" input id="newEntry" 
 	type="text" name="entry"></textarea>
 	<br>
-	<input id="newDataSubmit" type="submit" value="Submit" />
+	<input id="newDataSubmit" class="btn btn-primary" type="submit" value="Submit" />
 </form>
 <br>
 
-
-<h1>Previous Entries:</h1>
-<div id="allEntries"></div>
+<span id="allEntries"></span>
 
 <script src="home.js"></script>

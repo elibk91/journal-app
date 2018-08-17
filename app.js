@@ -195,6 +195,12 @@ app.use(function(err, req, res, next){
 	res.send('500 - Server Error');
 });
 
-app.listen(app.get('port'), function(){
-	console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-});
+//for testing on localhost
+// app.listen(app.get('port'), function(){
+// 	console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+// });
+
+//For deployment to heroku
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log('server is now running');
+})

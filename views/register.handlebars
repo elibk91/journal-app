@@ -1,0 +1,28 @@
+
+{{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}
+
+{{#if usernameExists}}
+	<div class="alert alert-danger">{{usernameExists}}</div>
+{{/if}}
+
+	<form method="post" class="form-signin">
+		<h2 class="form-signin-heading">Register</h2>
+		<label class="sr-only">Username</label>
+		<input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+		<label class="sr-only">Password</label>
+		<input type="password" name="password" class="form-control" placeholder="Password" required="">
+		<label class="sr-only">Re-enter Password</label>
+		<input type="password" name="password2" class="form-control" placeholder="Re-enter Password" required="">
+		<br>
+
+		<a href="/login"> Already have an account? Login</a>
+		<br>
+		<br>
+
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Register</button>
+	</form>
